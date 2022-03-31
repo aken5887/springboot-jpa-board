@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout1}">
+
+<div layout:fragment="content">
+    <div class="panel-heading">View Page</div>
+        <div class="panel-body">
+            <form id="f1" th:action="@{modify}" method="post">
+
+                <input type="hidden" name="page" th:value="${pageVO.page}"/>
+                <input type="hidden" name="size" th:value="${pageVO.size}"/>
+                <input type="hidden" name="type" th:value="${pageVO.type}"/>
+                <input type="hidden" name="keyword" th:value="${pageVO.keyword}"/>
+
+                <div class="form-group">
+                    <lable>BNO</lable>
+                    <input class="form-control" name="bno" th:value="${board.bno}" readonly>
+                    <p class="help-block">Title text here</p>
+                </div>
+
+                <div class="form-group">
+                    <lable>Title</lable>
+                    <input class="form-control" name="title" th:value="${board.title}">
+                    <p class="help-block">Title text here</p>
+                </div>
+
+                <div class="form-group">
+                    <lable>Writer</lable>
+                    <input class="form-control" name="writer" th:value="${board.writer}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <lable>Content</lable>
+                    <textarea class="form-control" role="3" name="content" th:text="${board.content}"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <lable>RegDate</lable>
+                    <input class="form-control" name="regDate" th:value="${#dates.format(board.regdate, 'yyyy-MM-dd')}" readonly></input>
+                </div>
+
+                <!--
+                저장
+                취소
+                -->
+                <div class="pull-right">
+                    <a href="#" class="btn btn-warning modbtn">Modfiy</a>
+                    <a href="#" class="btn btn-danger delbtn">Delete</a>
+                    <a th:href="@{ view(page=${pageVO.page},
+                        size=${pageVO.size},
+                        type=${pageVO.type},
+                        keyword=${pageVO.keyword},
+                        bno=${board.bno}
+                        )}" class="btn btn-primary">Cancel & Go View</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            let formObj = $("#f1");
+            $(".delbtn").click(function(e){
+                formObj.attr("action", "delete");
+                formObj.attr("method", "post");
+                formObj.submit();
+            });
+
+            $(".modbtn").click(function() {
+                formObj.attr("action", "modify");
+                formObj.attr("method", "post");
+                formObj.submit();
+            });
+        });
+    </script>
+</th:block>
+</html>

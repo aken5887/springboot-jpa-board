@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+    <h2>member join page</h2>
+    <form method="post">
+        <p>
+            <label for="username">UID</label>
+            <input type="text" id="uid" name="uid" th:value="${member.uid}" readonly/>
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="text" id="password" name="upw" th:value="${member.upw}" readonly/>
+        </p>
+        <p>
+            <label for="username">UserName</label>
+            <input type="text" id="username" name="uname" th:value="${member.uname}" readonly/>
+        </p>
+        <p>
+           [[${member.memberRoles}]]
+        </p>
+        <input type="hidden" th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
+        <button type="submit" class="btn">JOIN</button>
+    </form>
+</body>
+</html>
